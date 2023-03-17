@@ -228,13 +228,3 @@ while True:
         thread2.start()
         window['out'].update(f'Status: Репликатор запущен')
         window['!!GO!!'].update(f'CLOSE')
-
-#IN = input('Запустить репликатор? [Y/N]')
-#if IN == 'Y':
-#    thread1.start()
-#    thread2.start()
-
-#if IN == 'X' or 'N':
- #   print('Репликатор выключен')
-    # Конец чтения клавиатуры
-    #key_list.stop()cd 

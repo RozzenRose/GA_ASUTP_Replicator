@@ -1,28 +1,28 @@
 print('Перед запуском рекомендуется прочесть инструкцию\nрепликатор будет невозможно остановить\nпока он не обработает весь damp\n\nby Пантюхин В.А. отдел АСУТП \n\n')
 
-from pynput import keyboard, mouse          # Библиотеки для управление клавиатуры и мышки
+from pynput import keyboard, mouse          # Библиотеки для управления клавиатуры и мышки
 from pynput.mouse import Controller, Button # Подтягивание контроллеров клавиатуры и мышки
-import time                     # Подтягивание библиотеки для переменных управления временем
-from threading import Thread
-import PySimpleGUI as sg
+import time                                 # Подтягивание библиотеки для переменных управления временем
+from threading import Thread                # Библиотека для исползования нескольких потоков
+import PySimpleGUI as sg                    # Библиотека для интерфейса
 
 STOP = False
 keyb = keyboard.Controller()    # Присвоение контроллера клавиатуры
 mouse = mouse.Controller()      # Присвоение контроллера мыши
 ctrl_l = keyboard.Key.ctrl_l    # Присвоение клавиши LCtrl в более удобную переменную
 
-sg.theme('Default')
-layout = [
+sg.theme('Default')             # Тема интерфейса
+layout = [                      # Интерфейс
     [sg.Text('Перед началом работы рекомендуется прочесть инструкцию!')],
     [sg.Text('Для немедленной остановки репликатора нажмите RShift')],
     [sg.Text('Строчка для замены тега'), sg.Input(default_text='Введите заменяемый тег', key='TAG')],
-    [sg.Text('Строчка для замены комментария'), sg.Input(default_text='Введите заменяемый комментарий', key='TAGС')],
-    [sg.Checkbox('Реплицировать в один столбец', key='simple', default=False), sg.Checkbox('Реплицировать в два столбца', key='double', default=True)],
-    [sg.Text('Status: ready', key='out')],
-    [sg.Button('!!GO!!')]
+    [sg.Text('Строчка для замены комментария'), sg.Input(default_text='Введите заменяемый комментарий', key='TAGС')], 
+    [sg.Checkbox('Реплицировать в один столбец', key='simple', default=False), sg.Checkbox('Реплицировать в два столбца', key='double', default=True)], # Чекбоксы, галочки
+    [sg.Text('Status: ready', key='out')],      #Вывод статуса
+    [sg.Button('!!GO!!')]                       #Кнопка
 ]
-window = sg.Window('Replicator', layout, icon=r'C:/Users/rozze/OneDrive/Рабочий стол/Feels/Replicator.ico')
-def Replicator(key):
+window = sg.Window('Replicator', layout, icon=r'C:/Users/rozze/OneDrive/Рабочий стол/Feels/Replicator.ico') #Вызов ярлыка
+def Replicator(key):                    #Тело 
     past = values['TAG']
     way = ("C:/Replicator/damp.txt")    # Путь к файлу
     with open(way, 'r') as file:

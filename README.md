@@ -11,6 +11,6 @@
 
 Важно, что бы параметры вашей персонализации экрана были аналогичными: 
 
-![](img\Ricture1.png)
+![](/img/Ricture1.png)
 
 Скачать .exe: https://drive.google.com/drive/folders/1ZoXmk9Yk8iEm-d7qSyLL8qykDq6COHOi?usp=share_link

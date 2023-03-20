@@ -22,46 +22,46 @@ layout = [                      # Интерфейс
     [sg.Button('!!GO!!')]                       #Кнопка
 ]
 window = sg.Window('Replicator', layout, icon=r'C:/Users/rozze/OneDrive/Рабочий стол/Feels/Replicator.ico') #Вызов ярлыка
-def Replicator(key):                    #Тело 
-    past = values['TAG']
+def Replicator(key):                    # Тело скрипта
+    past = values['TAG']                # Запись первого заменяемого тега
     way = ("C:/Replicator/damp.txt")    # Путь к файлу
-    with open(way, 'r') as file:
-        buff = file.read()
-    with open(way, "w") as file:              # Открытие файла
-        file.writelines(past+'\n')
-        file.write(buff)
-    file = open(way, "r")            # Открытие файла
+    with open(way, 'r') as file:        # Чтение файла с тегами
+        buff = file.read()          
+    with open(way, "w") as file:        # Запись в файл с тегами
+        file.writelines(past+'\n')      # Запись первого тега
+        file.write(buff)                # Запись старого файла
+    file = open(way, "r")               # Открытие файла
     
-    pastc = values['TAGС']
-    way2 = ("C:/Replicator/damp2.txt")    # Путь к файлу
-    with open(way2, 'r') as filec:
-        buff1 = filec.read()
-    with open(way2, "w") as filec:              # Открытие файла
-        filec.writelines(pastc+'\n')
-        filec.write(buff1)
-    filec = open(way2, "r")            # Открытие файла  
-    j = 0
+    pastc = values['TAGС']              # Запись первого заменяемого комментария
+    way2 = ("C:/Replicator/damp2.txt")  # Путь к файлу
+    with open(way2, 'r') as filec:      # Чтение файла с комментариями
+        buff1 = filec.read()          
+    with open(way2, "w") as filec:      # Запись файла с комментариями
+        filec.writelines(pastc+'\n')    # Запись первого комментария
+        filec.write(buff1)              # Запись старого файла
+    filec = open(way2, "r")             # Открытие файла  
+    j = 0       # Счетчик цикла
     
     while True:                     # Цикл строчек
         if j == 0:
-            linePast = file.readline()  # Перекладка строчки из dump в переменную line
-            linePastC = filec.readline()  # Перекладка строчки из dump в переменную line
+            linePast = file.readline()  # Перекладка строчки с первым тегом из dump в переменную linePast
+            linePastC = filec.readline()  # Перекладка строчки с комментарием из dump в переменную linePastC
         else:
-            linePast = lineFuture  # Перекладка строчки из dump в переменную line
-            linePastC = lineFutureC  # Перекладка строчки из dump в переменную line
-        lineFuture = file.readline()  # Перекладка строчки из dump в переменную line
-        lineFutureC = filec.readline()  # Перекладка строчки из dump в переменную line
-        if not lineFuture:
+            linePast = lineFuture  # Перекладка строчки с тегом из прошлого цикла 
+            linePastC = lineFutureC  # Перекладка строчки с комментарием из прошлого цикла
+        lineFuture = file.readline()  # Перекладка строчки новго тега из файла
+        lineFutureC = filec.readline()  # Перекладка строчки c новым комментарием из файла
+        if not lineFuture:        
             print('Обработанны все строки в файле damp, рапликатор остановлен')
             window['out'].update(f'Status: Обработанны все строчки, репликатор остановлен')
-        if not lineFuture or not thread2.is_alive(): # Остановка цикла, если строчка окажется пустой
+        if not lineFuture or not thread2.is_alive(): # Остановка цикла, если строчка окажется пустой или поток два окажется остановленным
             break
         j = j + 1
         mouse.position = (718, 167) # Выбор буфферного окна
         mouse.click(Button.left)    # Клик
 
         time.sleep(0.2)
-        keyb.press(keyboard.Key.ctrl_l)      #
+        keyb.press(keyboard.Key.ctrl_l)      # Вызов окна атозамены Ctrl_H
         time.sleep(0.1)         #
         keyb.press('р')         #
         time.sleep(0.3)        #
@@ -71,33 +71,33 @@ def Replicator(key):                    #Тело
         time.sleep(0.1)     
         
         ###########################!!!!!!!!!!!ЗАМЕНА!!!!!!!!!!!!!!!!!!!########################
-        mouse.position = (680, 372) # Верхняя строка в окне замены
+        mouse.position = (680, 372)     # Верхняя строка в окне замены
         mouse.click(Button.left,2)   # Правый клик 
         time.sleep(0.1)
  
             ######## ЗАПИСЬ СЛОВА ИЗ СТРОЧКИ ФАЙЛА ##########
-        long = len(linePast)        # Определение длинны строчки
+        long = len(linePast)    # Определение длинны строчки
         i = 0                   # Внутренний цикловый счетчик
         while i < long:         # Цикл символов
-            if linePast[i] == (' '):
+            if linePast[i] == (' '):    # Замена пробелов на "_"
                 keyflow = '_'
             else:
                 keyflow = linePast[i]       # Присваивание символа переменной key
             keyb.press(keyflow)     # Нажимаем key
             keyb.release(keyflow)   # Отпускаем key
-            i = i + 1           # 
+            i = i + 1           
             if keyflow == ('\n'):    # Проверка символа на равенство "ПРБЕЛУ"
                 break           # Останавливаем запись слова, если текущий смвол"ПРОБЕЛ"
        
         mouse.position = (680, 402) # Нижнеяя строка в окне замены
         mouse.click(Button.left, 2)  # Двойной клик
-        time.sleep(0.1) 
+        time.sleep(0.1)                 # Пауза
         
                     ######## ЗАПИСЬ СЛОВА ИЗ СТРОЧКИ ФАЙЛА ##########
         long = len(lineFuture)        # Определение длинны строчки
         i = 0                   # Внутренний цикловый счетчик
         while i < long:         # Цикл символов
-            if lineFuture[i] == (' '):
+            if lineFuture[i] == (' '):   # Замена пробелов на "_"
                 keyflow = '_'
             else:
                 keyflow = lineFuture[i]       # Присваивание символа переменной key
@@ -107,19 +107,19 @@ def Replicator(key):                    #Тело
             if keyflow == ('\n'):    # Проверка символа на равенство "ПРБЕЛУ"
                 break           # Останавливаем запись слова, если текущий смвол"ПРОБЕЛ"
         
-        time.sleep(0.1)
+        time.sleep(0.1)      # Пауза
         mouse.position = (895, 427) # Кнопка "заменить все" в окне замены
         mouse.click(Button.left)    # Клик
   
         mouse.position = (680, 372) # Верхняя строка в окне замены
         mouse.click(Button.left, 2)   # Правый клик 
-        time.sleep(0.1) 
+        time.sleep(0.1)     # Пауза
 
             ######## ЗАПИСЬ СЛОВА ИЗ СТРОЧКИ ФАЙЛА ##########
         long = len(linePastC)        # Определение длинны строчки
         i = 0                   # Внутренний цикловый счетчик
         while i < long:         # Цикл символов
-            if linePastC[i] == (' '):
+            if linePastC[i] == (' '):    # Замена пробелов на "_"
                 keyflow = '_'
             else:
                 keyflow = linePastC[i]       # Присваивание символа переменной key
@@ -131,13 +131,13 @@ def Replicator(key):                    #Тело
        
         mouse.position = (680, 402) # Нижнеяя строка в окне замены
         mouse.click(Button.left, 2)  # Двойной клик
-        time.sleep(0.1) 
+        time.sleep(0.1)     # Пауза
         
                     ######## ЗАПИСЬ СЛОВА ИЗ СТРОЧКИ ФАЙЛА ##########
         long = len(lineFutureC)        # Определение длинны строчки
         i = 0                   # Внутренний цикловый счетчик
         while i < long:         # Цикл символов
-            if lineFutureC[i] == (' '):
+            if lineFutureC[i] == (' '):    # Замена пробелов на "_"
                 keyflow = '_'
             else:
                 keyflow = lineFutureC[i]       # Присваивание символа переменной key
@@ -147,15 +147,15 @@ def Replicator(key):                    #Тело
             if keyflow == ('\n'):    # Проверка символа на равенство "ПРБЕЛУ"
                 break           # Останавливаем запись слова, если текущий смвол"ПРОБЕЛ"
         
-        time.sleep(0.1)
+        time.sleep(0.1)         # Пауза
         mouse.position = (895, 427) # Кнопка "заменить все" в окне замены
         mouse.click(Button.left)    # Клик
 
-        time.sleep(0.1)
+        time.sleep(0.1)         # Пауза
         mouse.position = (926, 341) # Кнопка "закрыть" в окне замены
         mouse.click(Button.left)    # Клик
         
-        time.sleep(0.2)
+        time.sleep(0.2)         # Пауза
         keyb.press(keyboard.Key.ctrl_l)   #
         time.sleep(0.1)      #
         keyb.press('ф')      #
@@ -202,29 +202,29 @@ def Replicator(key):                    #Тело
     file.close()    # Закрытие файла
     filec.close()    # Закрытие файла
 
-def Listener():
-    def stop(key):
-        if key == keyboard.Key.shift_r:
-            print('Нажат RShift репликатор остановлен')
-            window['out'].update(f'Status: был нажат RShift, репликатор остановлен')
-            return False
-            thread2.join()
-    with keyboard.Listener(on_press=stop) as listener:     # Инициализация чтения клавиатуры
+def Listener():         # Слушатель
+    def stop(key):                                                                       # Условие для остановки второго потока
+        if key == keyboard.Key.shift_r:                                                  # Когда слушатель услышат правый шифт
+            print('Нажат RShift репликатор остановлен')                                  # Он напишет сообщение в консоль
+            window['out'].update(f'Status: был нажат RShift, репликатор остановлен')     # обновит вывод статуса в интерфейса
+            return False                                                                 # Вернет команду остановки слушателю
+            thread2.join()                                                               # Рипнет второй поток
+    with keyboard.Listener(on_press=stop) as listener:     # Инициализация слушателя
         listener.join()
 
-thread1 = Thread(target=Replicator, args=('Y'))
-thread2 = Thread(target=Listener, args=())
+thread1 = Thread(target=Replicator, args=('Y')) #Инициализация первого потока
+thread2 = Thread(target=Listener, args=())      #Инициализация второго потока
 
-while True:
-    event, values = window.read()
-    if values['simple'] == True:
+while True: # Основной цикл
+    event, values = window.read()   # Чтение интерфейса
+    if values['simple'] == True:    # Данные из чекбоксов в однозначный вид
         values['double'] = False
     if values['double'] == True:
         values['simple'] = False
-    if event is None or event == sg.WIN_CLOSED:
+    if event is None or event == sg.WIN_CLOSED:  # Остановка
         break
-    if event == '!!GO!!':
-        thread1.start()
-        thread2.start()
-        window['out'].update(f'Status: Репликатор запущен')
-        window['!!GO!!'].update(f'CLOSE')
+    if event == '!!GO!!':   # Событие нажатия кнопки
+        thread1.start()     # Запуск первого потока
+        thread2.start()     # Запуск второго потока
+        window['out'].update(f'Status: Репликатор запущен')     # Обновление выхода 
+        window['!!GO!!'].update(f'CLOSE')                       # Обновить кнопку запуска в кнопку закрытия
